@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>888 - Lotto Draw</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="banner">
+        <h1 class="heading">Lotto & Bitcoin</h1>
+        <div class="badge">New</div>
+      </div>
+      <div class="grid">
+        <div class="div dark span-2">
+          <h2 class="heading">The Irish Lotto</h2>
+          <p>
+            Since 16th April 1988, the Irish Lotto draw takes place every
+            Saturday at 8pm. On 30th May 1990 an additional Wednesday evening
+            draw was introduced. What would EUR 100 in winnings invested on a
+            draw date be worth in Euro now? Enter a date and time in the form to
+            get the next draw date and time, with the current value of your
+            investment.
+          </p>
+        </div>
+        <div class="div dark">
+          <h2  class="heading">Enter the Date and Time</h2>
+          <form id="lotto-form">
+            <input type="datetime-local" id="input-date" name="input-date" >
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="div bitcoin-container dark">
+          <div class="date">
+            <h2  class="heading">
+              Draw Date and time
+            </h2>
+            <div id="result"></div>
+          </div>
+          <div class="bitcoin">
+            <h2 class="heading">
+              Your Bitcoin Value
+            </h2>
+            <div id="btc-value"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>

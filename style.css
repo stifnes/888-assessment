@@ -1,0 +1,77 @@
+html, body {
+  background-color: #4A4A4A;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+
+.dark {
+  background-color: #272727;
+  color: #ffffff;
+}
+
+.heading {
+  background-color: #000000;
+  margin: 0;
+  padding: 16px;
+}
+
+.banner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 30px 36px;
+}
+
+.badge {
+  background-color: #FC6200;
+  color: #ffffff;
+  padding: 4px 8px;
+  inset: 0 0 auto auto;
+  transform-origin: 0 0;
+  transform: translate(29.3%) rotate(45deg);
+  box-shadow: 0 0 0 999px #FC6200;
+  clip-path: inset(0 -100%);
+  position: absolute;
+}
+
+.grid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.span-2 {
+  grid-row: span 2;
+}
+
+.bitcoin-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.bitcoin-container .bitcoin {
+  flex: 1;
+}

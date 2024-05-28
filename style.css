@@ -9,6 +9,29 @@ body {
   box-sizing: border-box;
 }
 
+/* Typography */
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+p {
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.heading {
+  background-color: #000000;
+  margin: 0;
+  padding: 16px;
+  font-size: 16px;
+}
+
+/* Layout */
 .container {
   display: flex;
   justify-content: flex-start;
@@ -22,12 +45,6 @@ body {
 .dark {
   background-color: #272727;
   color: #ffffff;
-}
-
-.heading {
-  background-color: #000000;
-  margin: 0;
-  padding: 16px;
 }
 
 .content {
@@ -56,6 +73,9 @@ body {
   box-shadow: 0 0 0 999px #fc6200;
   clip-path: inset(0 -100%);
   position: absolute;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 900;
 }
 
 .grid {
@@ -64,6 +84,10 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 16px;
+}
+
+.grid > div:first-child {
+  min-height: 400px;
 }
 
 .row-span-2 {
@@ -84,23 +108,20 @@ body {
   flex: 1;
 }
 
-h2 {
-  font-size: 16px;
-  font-weight: 400;
-}
-
-#lotto-form input {
-  width: 200px;
+/* Form inputs and buttons */
+.form-input {
+  width: 250px;
   padding: 8px;
   font-size: 16px;
   border: none;
+  appearance: none;
+  margin-right: 16px;
 }
-#lotto-form input:focus {
+.form-input:focus {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   outline: none;
 }
-
 .button {
   background-color: #fa6200;
   padding: 10px 40px;
@@ -109,13 +130,18 @@ h2 {
   border: none;
   text-transform: uppercase;
   font-size: 16px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #993e02;
 }
 
-#result {
+/* Results table */
+#date-value {
   position: relative;
 }
-
-#result::after {
+#date-value::after {
   content: "";
   display: block;
   clear: both;
@@ -126,23 +152,37 @@ h2 {
   top: 25%;
   width: 1px;
 }
-
-#result,
+#date-value,
 #btc-value {
   border-bottom: 1px solid #000000;
 }
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.table th {
+  text-transform: uppercase;
+  text-align: left;
+}
+.table tr {
+  height: 25px;
+  background-color: #191919;
+}
+.table th:first-child {
+  width: 30%;
+}
 
-
+/* Animation */
 .fade-in {
   animation: fadeIn 1s ease-in-out;
 }
 
 @keyframes fadeIn {
   from {
-      opacity: 0;
+    opacity: 0;
   }
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
@@ -150,5 +190,11 @@ h2 {
   .grid {
     grid-template-columns: 1fr;
     column-gap: 0;
+  }
+  .form-input {
+    width: 180px;
+  }
+  .grid > div:first-child {
+    min-height: max-content;
   }
 }

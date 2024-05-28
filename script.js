@@ -1,24 +1,29 @@
-// Function to display the next Lotto draw
+// Function to display the next Lotto draw and the Bitcoin value
 document
   .getElementById("lotto-form")
   .addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const resultDiv = document.getElementById('result');
+    const dateValueDiv = document.getElementById('date-value');
     const btcValueDiv = document.getElementById('btc-value');
             
     // Set loading states
-    resultDiv.innerText = 'Calculating next Lotto draw date...';
+    dateValueDiv.innerText = 'Calculating next Lotto draw date...';
     btcValueDiv.innerText = 'Calculating Bitcoin value...';
 
     const inputDate = new Date(document.getElementById("input-date").value);
+    if (isNaN(inputDate)) {
+        dateValueDiv.innerText = 'Please enter a valid date.';
+        btcValueDiv.innerText = 'Could not calculate Bitcoin value. Please enter a valid date.';
+        return;
+    }
     const nextDraw = getNextLottoDraw(inputDate);
     const formattedDate = formatDateString(nextDraw, 'full');
-    resultDiv.innerText = `${formattedDate}`;
+    dateValueDiv.innerText = `${formattedDate}`;
 
     const btcValue = await calculateBitcoinValue(nextDraw);
     if (btcValue !== null) {
-        btcValueDiv.innerText = `EUR ${btcValue.toFixed(2)}`;
+        btcValueDiv.innerText = `€ ${btcValue.toFixed(2)}`;
         // Apply fade-in animation
         btcValueDiv.classList.add('fade-in');
         // Remove the class after animation ends to allow re-application
@@ -26,7 +31,7 @@ document
             btcValueDiv.classList.remove('fade-in');
         }, { once: true });
     } else {
-        btcValueDiv.innerText = `Could not calculate Bitcoin value.`;
+        btcValueDiv.innerText = `Could not calculate Bitcoin value. Please enter a previous date from today.`;
     }
   });
 
@@ -72,28 +77,6 @@ function getNextLottoDraw(inputDate = new Date()) {
   }
 }
 
-function formatDateString(dateString, formatType = 'full') {
-  // Parse the input date string to a Date object
-  const date = new Date(dateString);
-
-  // Extract the day of the week, date, month, year, and time components
-  const dayOfWeek = date.toLocaleString('en-US', { weekday: 'short' });
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const year = date.getFullYear();
-
-  // Get the hours and determine AM/PM
-  let hours = date.getHours();
-  const period = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12 || 12; // Convert to 12-hour format
-
-  if (formatType === 'dateOnly') {
-    return `${day}-${month}-${year}`;
-  } else {
-      return `${dayOfWeek} ${day}-${month}-${year} ${hours}${period}`;
-  }
-}
-
 // Function to fetch historical Bitcoin price
 async function fetchHistoricalBitcoinPrice(date) {
   const formattedDate = formatDateString(date, 'dateOnly')
@@ -130,5 +113,27 @@ async function calculateBitcoinValue(drawDate) {
       return amountOfBitcoinPurchased * currentPrice;
   } else {
       return null;
+  }
+}
+
+// Utility function to format the date string
+function formatDateString(dateString, formatType = 'full') {
+  // Parse the input date string to a Date object
+  const date = new Date(dateString);
+
+  // Extract the day of the week, date, month, year, and time components
+  const dayOfWeek = date.toLocaleString('en-US', { weekday: 'short' });
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+
+  // Get the hours & minutes
+  let hours = date.getHours();
+  let minutes = date.getMinutes().toString().padStart(2, '0');
+
+  if (formatType === 'dateOnly') {
+    return `${day}-${month}-${year}`;
+  } else {
+      return `${dayOfWeek} ${day}-${month}-${year} ${hours}:${minutes}`;
   }
 }

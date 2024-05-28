@@ -9,6 +9,10 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.1/jasmine.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.1/jasmine.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.1/jasmine-html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.1/boot.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -23,7 +27,7 @@
             Since 16th April 1988, the Irish Lotto draw takes place every
             Saturday at 8pm. On 30th May 1990 an additional Wednesday evening
             draw was introduced. <br /><br />What would EUR 100 in winnings
-            invested on a draw date be worth in Euro now? Enter a date and time
+            invested on a draw date be worth in Euro now? <br /><br />Enter a date and time
             in the form to get the next draw date and time, with the current
             value of your investment.
           </p>
@@ -36,20 +40,29 @@
               type="datetime-local"
               id="input-date"
               name="input-date"
+              class="form-input"
               placeholder=""
             />
             <button type="submit" class="button">Submit</button>
           </form>
         </div>
-        <div class="div bitcoin-container dark col-span-2">
-          <div class="date">
-            <h2 class="heading">Draw Date and time</h2>
-            <div id="result" class="content"></div>
-          </div>
-          <div class="bitcoin">
-            <h2 class="heading">Your Bitcoin Value</h2>
-            <div id="btc-value" class="content"></div>
-          </div>
+        <div class="dark col-span-2">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="heading">DRAW DATE/TIME</th>
+                <th class="heading">YOUR BITCOIN'S VALUE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="date-value" class="content">
+                </td>
+                <td id="btc-value" class="content">
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

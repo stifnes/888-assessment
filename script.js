@@ -3,17 +3,30 @@ document
   .getElementById("lotto-form")
   .addEventListener("submit", async function (event) {
     event.preventDefault();
+
+    const resultDiv = document.getElementById('result');
+    const btcValueDiv = document.getElementById('btc-value');
+            
+    // Set loading states
+    resultDiv.innerText = 'Calculating next Lotto draw date...';
+    btcValueDiv.innerText = 'Calculating Bitcoin value...';
+
     const inputDate = new Date(document.getElementById("input-date").value);
     const nextDraw = getNextLottoDraw(inputDate);
-    document.getElementById(
-      "result"
-    ).innerText = `${nextDraw}`;
+    const formattedDate = formatDateString(nextDraw, 'full');
+    resultDiv.innerText = `${formattedDate}`;
 
     const btcValue = await calculateBitcoinValue(nextDraw);
     if (btcValue !== null) {
-        document.getElementById('btc-value').innerText = `EUR 100 of Bitcoin purchased on the draw date is worth EUR ${btcValue.toFixed(2)} today.`;
+        btcValueDiv.innerText = `EUR ${btcValue.toFixed(2)}`;
+        // Apply fade-in animation
+        btcValueDiv.classList.add('fade-in');
+        // Remove the class after animation ends to allow re-application
+        btcValueDiv.addEventListener('animationend', () => {
+            btcValueDiv.classList.remove('fade-in');
+        }, { once: true });
     } else {
-        document.getElementById('btc-value').innerText = `Could not calculate Bitcoin value.`;
+        btcValueDiv.innerText = `Could not calculate Bitcoin value.`;
     }
   });
 
@@ -59,13 +72,31 @@ function getNextLottoDraw(inputDate = new Date()) {
   }
 }
 
+function formatDateString(dateString, formatType = 'full') {
+  // Parse the input date string to a Date object
+  const date = new Date(dateString);
 
-// Function to fetch historical Bitcoin price
-async function fetchHistoricalBitcoinPrice(date) {
+  // Extract the day of the week, date, month, year, and time components
+  const dayOfWeek = date.toLocaleString('en-US', { weekday: 'short' });
   const day = date.getDate().toString().padStart(2, '0');
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const year = date.getFullYear();
-  const formattedDate = `${day}-${month}-${year}`;
+
+  // Get the hours and determine AM/PM
+  let hours = date.getHours();
+  const period = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12 || 12; // Convert to 12-hour format
+
+  if (formatType === 'dateOnly') {
+    return `${day}-${month}-${year}`;
+  } else {
+      return `${dayOfWeek} ${day}-${month}-${year} ${hours}${period}`;
+  }
+}
+
+// Function to fetch historical Bitcoin price
+async function fetchHistoricalBitcoinPrice(date) {
+  const formattedDate = formatDateString(date, 'dateOnly')
 
   try {
       const response = await fetch(`https://api.coingecko.com/api/v3/coins/bitcoin/history?date=${formattedDate}`);
